@@ -1,7 +1,7 @@
 /**
- * Created by ljunb on 2017/5/25.
+ * Created by canfoo on 2017/12/10.
  */
-import {observable, action} from 'mobx'
+import { observable, action } from 'mobx'
 
 class Nav {
   @observable hot = true

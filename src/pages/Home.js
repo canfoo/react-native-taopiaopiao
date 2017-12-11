@@ -10,25 +10,45 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import NavTitle from '../components/NavTitle';
+import { observer, inject } from 'mobx-react/native'
 
-class Home extends Component {
+@inject('apis')
+@observer
+class HotList extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentWillMount() {
+    const { apis } = this.props
+    apis.fetchSwiperList()
+  }
+
   render() {
+    console.log('this.props.apis.swiperList', this.props.apis.swiperList.slice())
     return (
       <View>
         <Text>
-          Welcome Home
+          Welcome HotList
         </Text>
       </View>
     );
   }
 }
 
+const navigationOptions = ({ navigation }) => {
+  return {
+    headerTitle: (
+      <NavTitle navigation={navigation} />
+    ),
+    headerMode: 'none'
+  }
+}
+
 export default StackNavigator({
   Home: {
-    screen: Home,
-    navigationOptions: {
-      headerTitle: NavTitle
-    }
+    screen: HotList,
+    navigationOptions
   }
 })
 

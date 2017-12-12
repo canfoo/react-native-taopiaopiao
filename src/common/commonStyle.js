@@ -7,7 +7,7 @@ const borderStyle = {
   borderColor: '#d9d9d9'
 }
 
-const twoPix = 2 * gScreen.onePix
+const twoPix = 1 * gScreen.onePix
 
 export default {
   borderStyle: {

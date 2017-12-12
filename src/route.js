@@ -28,6 +28,7 @@ const renderTabBar = (icons) => ({ tintColor, focused }) => {
   )
 }
 
+
 export default {
   Home: {
     screen: HomePage,

@@ -9,36 +9,66 @@ import {
   StyleSheet,
   ScrollView
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator } from 'react-navigation'
 import { observer, inject } from 'mobx-react/native'
-import NavTitle from '../components/NavTitle';
+import NavTitle from '../components/NavTitle'
 import SwiperView from '../components/SwiperView'
-import FilmList from '../components/Home/FilmList'
+import FilmItem from '../components/Home/FilmItem'
+import Player from '../components/Player'
 
 @inject('apis')
+@inject('nav')
 @observer
-class HotList extends Component {
+class Home extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      offset: 0
+    }
   }
 
   componentWillMount() {
     const { apis } = this.props
     apis.fetchSwiperList()
-    apis.fetchHotFilmList({limit: 20, offset: 0})
+    apis.fetchHotFilmList({city: 'bj'})
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps.nav.hot', nextProps.nav.hot)
+  }
+
+  _renderFilmList(lists) {
+    return (
+      <View>
+        {
+          lists.map((item, index) => {
+            return (
+              <FilmItem filmItem={item} hot={this.props.nav.hot} key={item.id} />
+            )
+          })
+        }
+      </View>
+    )
   }
 
   render() {
+    if (!this.props.nav.hot && !this.props.apis.comingFilmList.slice().length) {
+      const { apis } = this.props
+      apis.fetchComingFilmList({limit: 20, offset: this.state.offset})
+    }
+
     return (
       <View style={styles.container}>
-        <View style={styles.swiperBox}>
-          <SwiperView uriList={this.props.apis.swiperList.slice()} />
-        </View>
-        <View>
-          <ScrollView>
-            <FilmList hotList={this.props.apis.hotFilmList.slice()}/>
-          </ScrollView>
-        </View>
+        <ScrollView>
+          <View style={styles.swiperBox}>
+            <SwiperView uriList={this.props.apis.swiperList.slice()} />
+          </View>
+          <View style={styles.filmList}>
+            {
+              this.props.nav.hot ? this._renderFilmList(this.props.apis.hotFilmList.slice()) : this._renderFilmList(this.props.apis.comingFilmList.slice())
+            }
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -53,12 +83,14 @@ const navigationOptions = ({ navigation }) => {
   }
 }
 
-export default StackNavigator({
-  Home: {
-    screen: HotList,
-    navigationOptions
-  }
-})
+export default Home
+
+// export default StackNavigator({
+//   Home: {
+//     screen: Home,
+//     navigationOptions
+//   }
+// })
 
 const styles = StyleSheet.create({
   container: {
@@ -66,5 +98,9 @@ const styles = StyleSheet.create({
   },
   swiperBox: {
     height: (520/1280 * gScreen.width + 10)
+  },
+  filmList: {
+    marginTop: -10,
+    marginBottom: 15
   }
 });

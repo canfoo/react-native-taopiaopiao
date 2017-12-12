@@ -1,7 +1,8 @@
 /**
  * Created by canfoo on 2017/12/10.
  */
-const _HOST = 'http://localhost:9090'
+// const _HOST = 'http://localhost:9090'
+const _HOST = 'http://192.168.166.165:9090'
 const delay = timeout => {
     return new Promise((resolve, reject) => {
         setTimeout(() => reject({message: '请求超时'}), timeout * 1000)

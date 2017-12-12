@@ -20,21 +20,43 @@ export default class NavTitle extends Component {
   }
 
   render() {
-    const { nav } = this.props
+    const { nav, navigation } = this.props
+    let Ele = null
+    switch (navigation.state.routeName) {
+      case 'Home':
+        Ele = (
+          <View style={styles.outBox}>
+            <View style={styles.innerbox}>
+              <View
+                style={{flex: 1, alignItems: 'stretch', justifyContent: 'center', backgroundColor: nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}
+                onTouchStart={() => nav.switchNav(true)}>
+                <Text style={{textAlign: 'center', color: !nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}>正在热映</Text>
+              </View>
+              <View
+                style={{flex: 1, alignItems: 'stretch', justifyContent: 'center', backgroundColor: !nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}
+                onTouchStart={() => nav.switchNav(false)}>
+                <Text style={{textAlign: 'center', color: nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}>即将上映</Text>
+              </View>
+            </View>
+          </View>
+        )
+        break;
+      case 'Cinema':
+        Ele = (
+          <Text>影院</Text>
+        )
+        break;
+      case 'Me':
+        Ele = (
+          <Text>我的</Text>
+        )
+        break;
+      default:
+        Ele = null
+    }
     return (
-      <View style={styles.outBox}>
-        <View style={styles.innerbox}>
-          <View
-            style={{flex: 1, alignItems: 'stretch', justifyContent: 'center', backgroundColor: nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}
-            onTouchStart={() => nav.switchNav(true)}>
-            <Text style={{textAlign: 'center', color: !nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}>正在热映</Text>
-          </View>
-          <View
-            style={{flex: 1, alignItems: 'stretch', justifyContent: 'center', backgroundColor: !nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}
-            onTouchStart={() => nav.switchNav(false)}>
-            <Text style={{textAlign: 'center', color: nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}>即将上映</Text>
-          </View>
-        </View>
+      <View>
+        { Ele }
       </View>
     )
   }

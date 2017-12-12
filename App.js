@@ -4,12 +4,16 @@
 import './src/common/globalContants'
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { TabNavigator } from 'react-navigation';
+import {
+  TabNavigator,
+  StackNavigator
+} from 'react-navigation';
 import route from './src/route'
 import { Provider } from 'mobx-react/native'
 import stores from './src/store'
 import Toast from 'react-native-easy-toast'
-import Loading from './src/components/Loading';
+import Loading from './src/components/Loading'
+import NavTitle from './src/components/NavTitle'
 
 const AppNavigator = TabNavigator(route, {
   tabBarOptions: {
@@ -22,6 +26,22 @@ const AppNavigator = TabNavigator(route, {
       backgroundColor: '#fff',
       height: 56
     }
+  }
+})
+
+const navigationOptions = ({ navigation }) => {
+  return {
+    headerTitle: (
+      <NavTitle navigation={navigation} />
+    ),
+    headerMode: 'none'
+  }
+}
+
+const AppStackNavigator = StackNavigator({
+  Home: {
+    screen: AppNavigator,
+    navigationOptions
   }
 })
 
@@ -42,7 +62,7 @@ class App extends Component {
       <View style={{flex: 1}}>
         <Provider {...stores}>
           <View style={{flex: 1}}>
-            <AppNavigator></AppNavigator>
+            <AppStackNavigator />
             <Toast ref="toast" defaultCloseDelay={500} position={'top'} />
             <Loading />
           </View>

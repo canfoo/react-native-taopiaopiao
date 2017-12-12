@@ -7,6 +7,8 @@ import { requestInterceptor } from '../../common/descriptor'
 
 class Apis {
   @observable swiperList = []
+  @observable hotFilmList = []
+  @observable comingFilmList = []
 
   @action
   async fetchSwiperList () {
@@ -27,9 +29,6 @@ class Apis {
     return get({url: '/movie/swiper', timeout: 30}).then(res => res.json())
   }
 
-
-  @observable hotFilmList = []
-
   @action
   async fetchHotFilmList (params) {
     const response = await this.getHotFilmListRequest(params)
@@ -40,6 +39,19 @@ class Apis {
 
   @requestInterceptor(true, '获取热映列表失败')
   getHotFilmListRequest (params) {
+    return get({url: '/movie/hot/', params, timeout: 30}).then(res => res.json())
+  }
+
+  @action
+  async fetchComingFilmList (params) {
+    const response = await this.getComingFilmListRequest(params)
+    if (response && response.errno === 0) {
+      this.comingFilmList.replace(response.data.data.returnValue)
+    }
+  }
+
+  @requestInterceptor(true, '获取热映列表失败')
+  getComingFilmListRequest (params) {
     return get({url: '/movie/coming/', params, timeout: 30}).then(res => res.json())
   }
 }

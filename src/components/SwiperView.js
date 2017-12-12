@@ -3,13 +3,32 @@
  */
 import React from 'react';
 import {
-  View
+  View,
+  Image,
+  StyleSheet
 } from 'react-native';
+import Swiper from 'react-native-swiper'
 
 export default (props) => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      
-    </View>
+    <Swiper autoplay={true} loop={true} >
+      {
+        props.uriList.map((uri, index) => (
+          <View key={index}>
+            <Image
+              source={{uri}}
+              style={styles.img}
+            />
+          </View>
+        ))
+      }
+    </Swiper>
   )
 }
+
+const styles = StyleSheet.create({
+  img: {
+    width: gScreen.width,
+    height: (520/1280 * gScreen.width)
+  }
+});

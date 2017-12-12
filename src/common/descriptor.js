@@ -6,9 +6,9 @@ import loadingInstance from '../store/common/loading'
 
 function errorHandle(errorMessage, handle) {
   if (handle) {
-    handle(errorMessage || '操作失败')
+    handle(errorMessage || '请求失败')
   } else {
-    toastInstance.show(errorMessage || '操作失败')
+    toastInstance.show(errorMessage || '请求失败')
   }
 }
 

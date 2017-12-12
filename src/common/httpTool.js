@@ -4,7 +4,7 @@
 const _HOST = 'http://localhost:9090'
 const delay = timeout => {
     return new Promise((resolve, reject) => {
-        setTimeout(() => reject('请求超时'), timeout * 1000)
+        setTimeout(() => reject({message: '请求超时'}), timeout * 1000)
     })
 }
 

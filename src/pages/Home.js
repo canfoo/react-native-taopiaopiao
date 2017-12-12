@@ -3,14 +3,17 @@
  */
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
   View,
-  Button
+  Text,
+  Button,
+  StyleSheet,
+  ScrollView
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import NavTitle from '../components/NavTitle';
 import { observer, inject } from 'mobx-react/native'
+import NavTitle from '../components/NavTitle';
+import SwiperView from '../components/SwiperView'
+import FilmList from '../components/Home/FilmList'
 
 @inject('apis')
 @observer
@@ -22,15 +25,20 @@ class HotList extends Component {
   componentWillMount() {
     const { apis } = this.props
     apis.fetchSwiperList()
+    apis.fetchHotFilmList({limit: 20, offset: 0})
   }
 
   render() {
-    console.log('this.props.apis.swiperList', this.props.apis.swiperList.slice())
     return (
-      <View>
-        <Text>
-          Welcome HotList
-        </Text>
+      <View style={styles.container}>
+        <View style={styles.swiperBox}>
+          <SwiperView uriList={this.props.apis.swiperList.slice()} />
+        </View>
+        <View>
+          <ScrollView>
+            <FilmList hotList={this.props.apis.hotFilmList.slice()}/>
+          </ScrollView>
+        </View>
       </View>
     );
   }
@@ -53,4 +61,10 @@ export default StackNavigator({
 })
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  swiperBox: {
+    height: (520/1280 * gScreen.width + 10)
+  }
 });

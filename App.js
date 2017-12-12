@@ -1,6 +1,7 @@
 /**
  * Created by canfoo on 2017/12/10.
  */
+import './src/common/globalContants'
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { TabNavigator } from 'react-navigation';
@@ -37,7 +38,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('stores.loading.show', stores.loading.show)
     return (
       <View style={{flex: 1}}>
         <Provider {...stores}>

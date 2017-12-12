@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
     borderStyle: 'solid',
-    borderWidth: 1,
+    borderWidth: 2 * gScreen.onePix,
     borderColor: '#1aa7f7',
-    borderRadius: 3
+    borderRadius: 5 * gScreen.onePix
   }
 })

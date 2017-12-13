@@ -5,10 +5,14 @@ import nav from './common/nav'
 import toast from './common/toast'
 import loading from './common/loading'
 import apis from './common/apis'
+import player from './common/palyer'
+import filmDetail from './common/filmDetail'
 
 export default {
   nav,
   toast,
   loading,
-  apis
+  apis,
+  player,
+  filmDetail
 }

@@ -10,7 +10,7 @@ import {
 import { observer, inject } from 'mobx-react/native'
 
 
-export default class HelloWorl extends Component {
+export default class HelloWorld extends Component {
   render() {
     return (
       <Text>hello world</Text>

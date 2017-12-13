@@ -5,7 +5,8 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 
@@ -22,33 +23,40 @@ export default class NavTitle extends Component {
   render() {
     const { nav, navigation } = this.props
     let Ele = null
-    switch (navigation.state.routeName) {
-      case 'Home':
+    switch (navigation.state.index) {
+      case 0:
         Ele = (
           <View style={styles.outBox}>
             <View style={styles.innerbox}>
-              <View
+              <TouchableOpacity
                 style={{flex: 1, alignItems: 'stretch', justifyContent: 'center', backgroundColor: nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}
-                onTouchStart={() => nav.switchNav(true)}>
+                activeOpacity={0.8}
+                onPress={() => nav.switchNav(true)}>
                 <Text style={{textAlign: 'center', color: !nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}>正在热映</Text>
-              </View>
-              <View
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={{flex: 1, alignItems: 'stretch', justifyContent: 'center', backgroundColor: !nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}
-                onTouchStart={() => nav.switchNav(false)}>
+                activeOpacity={0.8}
+                onPress={() => nav.switchNav(false)}>
                 <Text style={{textAlign: 'center', color: nav.hot ? _ACTIVECOLOR : _DEFAULTCOLOR}}>即将上映</Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
         )
         break;
-      case 'Cinema':
+      case 1:
         Ele = (
           <Text>影院</Text>
         )
         break;
-      case 'Me':
+      case 2:
         Ele = (
           <Text>我的</Text>
+        )
+        break;
+      case 3:
+        Ele = (
+          <Text>影片</Text>
         )
         break;
       default:

@@ -6,6 +6,7 @@ import {
   View,
   Text,
   Image,
+  TouchableOpacity,
   StyleSheet
 } from 'react-native'
 import {
@@ -15,10 +16,31 @@ import {
 import Button from 'react-native-button'
 import commonStyle from '../../common/commonStyle'
 
-
+@inject('player')
+@inject('filmDetail')
+@observer
 export default class FilmItem extends Component {
   constructor(props) {
     super(props)
+  }
+
+  _navigateToDetail(filmItem) {
+    const { navigation, filmDetail } = this.props;
+    navigation.navigate('FilmDetail', {id: filmItem.id})
+    filmDetail.updateData(filmItem)
+  }
+
+  _buyStyle(color) {
+    return {
+      borderWidth: 2 * gScreen.onePix,
+      borderStyle: 'solid',
+      borderColor: color,
+      color: color,
+      width: 60,
+      paddingTop: 5,
+      paddingBottom: 5,
+      borderRadius: 3
+    }
   }
 
   _renderBottomActivity () {
@@ -41,19 +63,6 @@ export default class FilmItem extends Component {
     }
   }
 
-  buyStyle(color) {
-    return {
-      borderWidth: 2 * gScreen.onePix,
-      borderStyle: 'solid',
-      borderColor: color,
-      color: color,
-      width: 60,
-      paddingTop: 5,
-      paddingBottom: 5,
-      borderRadius: 3
-    }
-  }
-
   render() {
     const containerStyle = {
       flex: 1,
@@ -64,24 +73,33 @@ export default class FilmItem extends Component {
       height: 180,
       backgroundColor: '#fff'
     }
+    const { navigate } = this.props.navigation;
     return (
       <View style={{...containerStyle, height: this.props.hot ? 180 : 150}}>
         <View style={styles.wrapper}>
-          <View style={styles.cover}>
+          <TouchableOpacity
+            style={styles.cover}
+            activeOpacity={0.85}
+            onPress={() => this.props.player.playVideo(this.props.filmItem.preview[0].iphoneUrl, `https://gw.alicdn.com/${this.props.filmItem.poster}_160x160Q75.jpg`)}
+          >
             <Image
               source={require('../../assets/imgs/default.png')}
               style={styles.defaultImg}
             />
             <Image
-              source={{uri: `https://gw.alicdn.com/${this.props.filmItem.poster}`}}
+              source={{uri: `https://gw.alicdn.com/${this.props.filmItem.poster}_160x160Q75.jpg`}}
               style={styles.filmImg}
             />
             <Image
               source={require('../../assets/imgs/play.png')}
               style={styles.playImg}
             />
-          </View>
-          <View style={styles.describtion}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.describtion}
+            activeOpacity={0.85}
+            onPress={() => this._navigateToDetail(this.props.filmItem)}
+          >
             <View>
               <Text style={styles.filmName}>{this.props.filmItem.showName}</Text>
             </View>
@@ -108,14 +126,19 @@ export default class FilmItem extends Component {
               <Text numberOfLines={1} style={styles.desc1}>{this.props.filmItem.highlight}</Text>
               <Text numberOfLines={1} style={styles.desc2}>{this.props.filmItem.leadingRole}</Text>
             </View>
-          </View>
-          <View style={styles.btnBox}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnBox}
+            activeOpacity={0.85}
+            onPress={() => this._navigateToDetail(this.props.filmItem)}
+          >
             <Button
-               style={this.props.hot ? this.buyStyle('#ff4d64') : this.buyStyle('#37b7ff')}
+               style={this.props.hot ? this._buyStyle('#ff4d64') : this._buyStyle('#37b7ff')}
+               onPress={() => this._navigateToDetail(this.props.filmItem)}
             >
                {this.props ? '购买' : '预售'}
             </Button>
-          </View>
+          </TouchableOpacity>
           {
             this._renderBottomActivity()
           }

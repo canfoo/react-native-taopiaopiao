@@ -33,7 +33,9 @@ class Apis {
   async fetchHotFilmList (params) {
     const response = await this.getHotFilmListRequest(params)
     if (response && response.errno === 0) {
-      this.hotFilmList.replace(response.data.data.returnValue)
+      runInAction(() => {
+        this.hotFilmList.replace(response.data.data.returnValue)
+      })
     }
   }
 
@@ -46,7 +48,9 @@ class Apis {
   async fetchComingFilmList (params) {
     const response = await this.getComingFilmListRequest(params)
     if (response && response.errno === 0) {
-      this.comingFilmList.replace(response.data.data.returnValue)
+      runInAction(() => {
+        this.comingFilmList.replace(response.data.data.returnValue)
+      })
     }
   }
 

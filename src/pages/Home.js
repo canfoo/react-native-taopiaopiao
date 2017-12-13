@@ -9,8 +9,11 @@ import {
   StyleSheet,
   ScrollView
 } from 'react-native';
+import {
+  observer,
+  inject
+} from 'mobx-react/native'
 import { StackNavigator } from 'react-navigation'
-import { observer, inject } from 'mobx-react/native'
 import NavTitle from '../components/NavTitle'
 import SwiperView from '../components/SwiperView'
 import FilmItem from '../components/Home/FilmItem'
@@ -19,12 +22,9 @@ import Player from '../components/Player'
 @inject('apis')
 @inject('nav')
 @observer
-class Home extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      offset: 0
-    }
   }
 
   componentWillMount() {
@@ -33,17 +33,13 @@ class Home extends Component {
     apis.fetchHotFilmList({city: 'bj'})
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps.nav.hot', nextProps.nav.hot)
-  }
-
   _renderFilmList(lists) {
     return (
       <View>
         {
           lists.map((item, index) => {
             return (
-              <FilmItem filmItem={item} hot={this.props.nav.hot} key={item.id} />
+              <FilmItem filmItem={item} hot={this.props.nav.hot} navigation={this.props.navigation} key={item.id} />
             )
           })
         }
@@ -51,19 +47,28 @@ class Home extends Component {
     )
   }
 
-  render() {
-    if (!this.props.nav.hot && !this.props.apis.comingFilmList.slice().length) {
-      const { apis } = this.props
-      apis.fetchComingFilmList({limit: 20, offset: this.state.offset})
-    }
+  _renderSwiperView() {
+    if (this.props.nav.hot) {
+      return (
+        <View style={styles.swiperBox}>
+          <SwiperView uriList={this.props.apis.swiperList.slice()} />
+        </View>
 
+      )
+    } else {
+      return null
+    }
+  }
+
+  render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
-          <View style={styles.swiperBox}>
-            <SwiperView uriList={this.props.apis.swiperList.slice()} />
-          </View>
-          <View style={styles.filmList}>
+        <Player />
+        <ScrollView style={styles.scrollViewStyle}>
+          {
+            this._renderSwiperView()
+          }
+          <View style={{marginBottom: 15, marginTop: this.props.nav.hot ? -10 : 0}}>
             {
               this.props.nav.hot ? this._renderFilmList(this.props.apis.hotFilmList.slice()) : this._renderFilmList(this.props.apis.comingFilmList.slice())
             }
@@ -74,33 +79,19 @@ class Home extends Component {
   }
 }
 
-const navigationOptions = ({ navigation }) => {
-  return {
-    headerTitle: (
-      <NavTitle navigation={navigation} />
-    ),
-    headerMode: 'none'
-  }
-}
-
-export default Home
-
-// export default StackNavigator({
-//   Home: {
-//     screen: Home,
-//     navigationOptions
-//   }
-// })
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    position: 'relative'
+  },
+  scrollViewStyle: {
+    position: 'relative'
   },
   swiperBox: {
     height: (520/1280 * gScreen.width + 10)
   },
   filmList: {
-    marginTop: -10,
+    marginTop: 0,
     marginBottom: 15
   }
 });

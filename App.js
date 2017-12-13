@@ -3,19 +3,26 @@
  */
 import './src/common/globalContants'
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import {
+  View,
+  Text
+} from 'react-native';
 import {
   TabNavigator,
   StackNavigator
 } from 'react-navigation';
-import route from './src/route'
+import {
+  tabRoutes,
+  stackRoutes
+} from './src/routes'
 import { Provider } from 'mobx-react/native'
 import stores from './src/store'
 import Toast from 'react-native-easy-toast'
 import Loading from './src/components/Loading'
 import NavTitle from './src/components/NavTitle'
+import Player from './src/components/Player'
 
-const AppNavigator = TabNavigator(route, {
+const AppNavigator = TabNavigator(tabRoutes, {
   tabBarOptions: {
     activeTintColor: '#ff4d64',
     labelStyle: {
@@ -42,7 +49,10 @@ const AppStackNavigator = StackNavigator({
   Home: {
     screen: AppNavigator,
     navigationOptions
-  }
+  },
+  ...stackRoutes
+}, {
+  initialRouteName: 'Home'
 })
 
 class App extends Component {

@@ -16,7 +16,7 @@ export default (props) => {
         props.uriList.map((uri, index) => (
           <View key={index}>
             <Image
-              source={{uri}}
+              source={{uri: `${uri}_720x720Q30.jpg`}}
               style={styles.img}
             />
           </View>

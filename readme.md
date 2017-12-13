@@ -35,7 +35,7 @@
 ```
 
 ## 项目预览
-![Mou icon](http://oimfqqetv.bkt.clouddn.com/rn_tpp_s.gif)
+![Mou icon](./Screenshots/rn_tpp_s.gif)
 
 ## 后台接口
 本项目是手动抓取淘票票部分数据，数据是16年12月份的，城市数据只有北上广有数据，其它城市都是随机从北上广数据抽取过来的，电影数据也是部分有数据。抓取的数据存放在server目录里的database里，供前端调用。

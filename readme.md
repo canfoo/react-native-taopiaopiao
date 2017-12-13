@@ -3,10 +3,11 @@
 ### [vue2.0构建淘票票，请点击这里](https://github.com/canfoo/vue2.0-taopiaopiao)
 
 ## 描述
-本项目是使用react-navie构建的app项目，已经成功在ios真机跑起来，android机暂时没有测试。分享的目的无他，只供大家学习、讨论。
+本项目是使用react-navie构建的app项目，已经成功在ios真机跑起来，android机暂时没有测试。分享的目的无他，只供大家学习、讨论。（ps: 由于之前已经分享过[vue2.0构建淘票票](https://github.com/canfoo/vue2.0-taopiaopiao)和[react构建淘票票](https://github.com/canfoo/react-taopiaopiao)了，所以这次的demo不是没有之前的完整，但是作为入门教材还是绰绰有余的）
 
 主要技术栈：<br/>
 - react-native
+- react-native-video
 - react-navigation
 - mobx
 - nodejs

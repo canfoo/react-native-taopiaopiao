@@ -77,7 +77,7 @@ export default class Player extends Component {
                 this.player = ref
               }}
               rate={1.0}
-              volume={0}
+              volume={1.0}
               muted={false}
               paused={this.state.paused}
               resizeMode="cover"

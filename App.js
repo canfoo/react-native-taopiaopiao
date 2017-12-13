@@ -2,7 +2,7 @@
  * Created by canfoo on 2017/12/10.
  */
 import './src/common/globalContants'
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   View,
   Text
@@ -10,7 +10,7 @@ import {
 import {
   TabNavigator,
   StackNavigator
-} from 'react-navigation';
+} from 'react-navigation'
 import {
   tabRoutes,
   stackRoutes
